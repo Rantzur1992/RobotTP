@@ -118,13 +118,13 @@ class ScreenshotKeywords(LibraryComponent):
         self._create_directory(path)
         if not self.driver.save_screenshot(path):
             self.driver.report().step(description="Take page screenshot to file",
-                                      message="Failed to save screenshot '{}'.".format(path), passed="False",
-                                      screenshot="True")
+                                      message="Failed to save screenshot '{}'.".format(path), passed=False,
+                                      screenshot=True)
             raise RuntimeError("Failed to save screenshot '{}'.".format(path))
         self._embed_to_log_as_file(path, 800)
         self.driver.report().step(description="Take page screenshot to file",
-                                  message="Failed to save screenshot '{}'.".format(path), passed="False",
-                                  screenshot="True")
+                                  message="Failed to save screenshot '{}'.".format(path), passed=False,
+                                  screenshot=True)
         return path
 
     def _capture_page_screen_to_log(self):
@@ -132,8 +132,8 @@ class ScreenshotKeywords(LibraryComponent):
             screenshot_as_base64 = self.driver.get_screenshot_as_base64()
             self._embed_to_log_as_base64(screenshot_as_base64, 800)
             self.driver.report().step(description="Take page screenshot to log",
-                                      message="Page screenshot has been taken and saved in logs", passed="True",
-                                      screenshot="False")
+                                      message="Page screenshot has been taken and saved in logs", passed=True,
+                                      screenshot=False)
             return EMBED
         except Exception as e:
             self.driver.report().step(description='Take page screenshot to log',
