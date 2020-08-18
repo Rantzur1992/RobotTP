@@ -38,10 +38,8 @@ class BrowserManagementKeywords(LibraryComponent):
     @keyword
     def close_all_browsers(self):
         """Closes all open browsers and resets the browser cache.
-
         After this keyword, new indexes returned from `Open Browser` keyword
         are reset to 1.
-
         This keyword should be used in test or suite teardown to make sure
         all browsers are closed.
         """
@@ -62,11 +60,9 @@ class BrowserManagementKeywords(LibraryComponent):
                      ff_profile_dir=None, options=None, service_log_path=None,
                      executable_path=None):
         """Opens a new browser instance to the optional ``url``.
-
         The ``browser`` argument specifies which browser to use. The
         supported browsers are listed in the table below. The browser names
         are case-insensitive and some browsers have multiple supported names.
-
         |    = Browser =    |        = Name(s) =       |
         | Firefox           | firefox, ff              |
         | Google Chrome     | googlechrome, chrome, gc |
@@ -81,17 +77,14 @@ class BrowserManagementKeywords(LibraryComponent):
         | PhantomJS         | phantomjs                |
         | HTMLUnit          | htmlunit                 |
         | HTMLUnit with Javascript | htmlunitwithjs    |
-
         To be able to actually use one of these browsers, you need to have
         a matching Selenium browser driver available. See the
         [https://github.com/robotframework/SeleniumLibrary#browser-drivers|
         project documentation] for more details. Headless Firefox and
         Headless Chrome are new additions in SeleniumLibrary 3.1.0
         and require Selenium 3.8.0 or newer.
-
         After opening the browser, it is possible to use optional
         ``url`` to navigate the browser to the desired address.
-
         Optional ``alias`` is an alias given for this browser instance and
         it can be used for switching between browsers. When same ``alias``
         is given with two `Open Browser` keywords, the first keyword will
@@ -104,10 +97,8 @@ class BrowserManagementKeywords(LibraryComponent):
         by this keyword. These indices start from 1, are incremented when new
         browsers are opened, and reset back to 1 when `Close All Browsers`
         is called. See `Switch Browser` for more information and examples.
-
         Optional ``remote_url`` is the URL for a
         [https://github.com/SeleniumHQ/selenium/wiki/Grid2|Selenium Grid].
-
         Optional ``desired_capabilities`` can be used to configure, for example,
         logging preferences for a browser or a browser and operating system
         when using [http://saucelabs.com|Sauce Labs]. Desired capabilities can
@@ -116,7 +107,6 @@ class BrowserManagementKeywords(LibraryComponent):
         [https://github.com/SeleniumHQ/selenium/wiki/DesiredCapabilities|
         Selenium documentation] lists possible capabilities that can be
         enabled.
-
         Optional ``ff_profile_dir`` is the path to the Firefox profile
         directory if you wish to overwrite the default profile Selenium
         uses. Notice that prior to SeleniumLibrary 3.0, the library
@@ -129,7 +119,6 @@ class BrowserManagementKeywords(LibraryComponent):
         to use FirefoxProfile `set_preference` to define different
         profile settings. See ``options`` argument documentation in below
         how to handle backslash escaping.
-
         Optional ``options`` argument allows defining browser specific
         Selenium options. Example for Chrome, the ``options`` argument
         allows defining the following
@@ -143,11 +132,9 @@ class BrowserManagementKeywords(LibraryComponent):
         [https://seleniumhq.github.io/selenium/docs/api/py/webdriver_chrome/selenium.webdriver.chrome.options.html#selenium.webdriver.chrome.options.Options|Chrome options]
         is used. Selenium options are also supported, when ``remote_url``
         argument is used.
-
         The SeleniumLibrary ``options`` argument accepts Selenium
         options in two different formats: as a string and as Python object
         which is an instance of the Selenium options class.
-
         The string format allows defining Selenium options methods
         or attributes and their arguments in Robot Framework test data.
         The method and attributes names are case and space sensitive and
@@ -162,7 +149,6 @@ class BrowserManagementKeywords(LibraryComponent):
         and attribute value. Example, `headless=True`. Multiple methods
         and attributes must be separated by a semicolon. Example:
         `add_argument("--headless");add_argument("--start-maximized")`.
-
         Arguments allow defining Python data types and arguments are
         evaluated by using Python
         [https://docs.python.org/3/library/ast.html#ast.literal_eval|ast.literal_eval].
@@ -170,7 +156,6 @@ class BrowserManagementKeywords(LibraryComponent):
         or 'value'. It is also possible to define other Python builtin
         data types, example `True` or `None`, by not using quotes
         around the arguments.
-
         The string format is space friendly. Usually, spaces do not alter
         the defining methods or attributes. There are two exceptions.
         In some Robot Framework test data formats, two or more spaces are
@@ -190,7 +175,6 @@ class BrowserManagementKeywords(LibraryComponent):
         backslash is use Python
         [https://docs.python.org/3/reference/lexical_analysis.html#string-and-bytes-literals|raw strings]
         and example write: r"C:\\\\path\\\\to\\\\profile".
-
         As last format, ``options`` argument also supports receiving
         the Selenium options as Python class instance. In this case, the
         instance is used as-is and the SeleniumLibrary will not convert
@@ -200,10 +184,8 @@ class BrowserManagementKeywords(LibraryComponent):
         | options = webdriver.ChromeOptions()
         | options.add_argument('--disable-dev-shm-usage')
         | return options
-
         Then the `${options}` variable can be used as an argument to
         ``options``.
-
         Example the ``options`` argument can be used to launch Chomium-based
         applications which utilize the
         [https://bitbucket.org/chromiumembedded/cef/wiki/UsingChromeDriver|Chromium Embedded Framework]
@@ -212,7 +194,6 @@ class BrowserManagementKeywords(LibraryComponent):
         `remote-debugging-port` port for the application. Once the browser
         is opened, the test can interact with the embedded web-content of
         the system under test.
-
         Optional ``service_log_path`` argument defines the name of the
         file where to write the browser driver logs. If the
         ``service_log_path``  argument contain a  marker ``{index}``, it
@@ -221,19 +202,16 @@ class BrowserManagementKeywords(LibraryComponent):
         and how they are represented can be customized using Python's
         [https://docs.python.org/3/library/string.html#format-string-syntax|
         format string syntax].
-
         Optional ``executable_path`` argument defines the path to the driver
         executable, example to a chromedriver or a geckodriver. If not defined
         it is assumed the executable is in the
         [https://en.wikipedia.org/wiki/PATH_(variable)|$PATH].
-
         Examples:
         | `Open Browser` | http://example.com | Chrome  |                                         |
         | `Open Browser` | http://example.com | Firefox | alias=Firefox                           |
         | `Open Browser` | http://example.com | Edge    | remote_url=http://127.0.0.1:4444/wd/hub |
         | `Open Browser` | about:blank        |         |                                         |
         | `Open Browser` | browser=Chrome     |         |                                         |
-
         Alias examples:
         | ${1_index} =    | `Open Browser` | http://example.com | Chrome  | alias=Chrome     | # Opens new browser because alias is new.         |
         | ${2_index} =    | `Open Browser` | http://example.com | Firefox |                  | # Opens new browser because alias is not defined. |
@@ -242,7 +220,6 @@ class BrowserManagementKeywords(LibraryComponent):
         | Should Be Equal | ${1_index}     | ${3_index}         |         |                  |                                                   |
         | Should Be Equal | ${1_index}     | ${4_index}         |         |                  |                                                   |
         | Should Be Equal | ${2_index}     | ${2}               |         |                  |                                                   |
-
         Example when using
         [https://seleniumhq.github.io/selenium/docs/api/py/webdriver_chrome/selenium.webdriver.chrome.options.html#selenium.webdriver.chrome.options.Options|Chrome options]
         method:
@@ -251,28 +228,22 @@ class BrowserManagementKeywords(LibraryComponent):
         | `Open Browser` | http://example.com | Chrome | options=${options}                                                                            |                                    |
         | `Open Browser` | None               | Chrome | options=binary_location="/path/to/binary";add_argument("remote-debugging-port=port")          | # Start Chomium-based application. |
         | `Open Browser` | None               | Chrome | options=binary_location=r"C:\\\\path\\\\to\\\\binary"                                         | # Windows OS path escaping.        |
-
         Example for FirefoxProfile
         | `Open Browser` | http://example.com | Firefox | ff_profile_dir=/path/to/profile                                                  | # Using profile from disk.                       |
         | `Open Browser` | http://example.com | Firefox | ff_profile_dir=${FirefoxProfile_instance}                                        | # Using instance of FirefoxProfile.              |
         | `Open Browser` | http://example.com | Firefox | ff_profile_dir=set_preference("key", "value");set_preference("other", "setting") | # Defining profile using FirefoxProfile mehtods. |
-
         If the provided configuration options are not enough, it is possible
         to use `Create Webdriver` to customize browser initialization even
         more.
-
         Applying ``desired_capabilities`` argument also for local browser is
         new in SeleniumLibrary 3.1.
-
         Using ``alias`` to decide, is the new browser opened is new
         in SeleniumLibrary 4.0. The ``options`` and ``service_log_path``
         are new in SeleniumLibrary 4.0. Support for ``ff_profile_dir``
         accepting an instance of the `selenium.webdriver.FirefoxProfile`
         and support defining FirefoxProfile with methods and
         attributes are new in SeleniumLibrary 4.0.
-
         Making ``url`` optional is new in SeleniumLibrary 4.1.
-
         The ``executable_path`` argument is new in SeleniumLibrary 4.2.
         """
         index = self.drivers.get_index(alias)
@@ -313,20 +284,16 @@ class BrowserManagementKeywords(LibraryComponent):
     def create_webdriver(self, driver_name, alias=None, kwargs={},
                          **init_kwargs):
         """Creates an instance of Selenium WebDriver.
-
         Like `Open Browser`, but allows passing arguments to the created
         WebDriver instance directly. This keyword should only be used if
         the functionality provided by `Open Browser` is not adequate.
-
         ``driver_name`` must be a WebDriver implementation name like Firefox,
         Chrome, Ie, Opera, Safari, PhantomJS, or Remote.
-
         The initialized WebDriver can be configured either with a Python
         dictionary ``kwargs`` or by using keyword arguments ``**init_kwargs``.
         These arguments are passed directly to WebDriver without any
         processing. See [https://seleniumhq.github.io/selenium/docs/api/py/api.html|
         Selenium API documentation] for details about the supported arguments.
-
         Examples:
         | # Use proxy with Firefox   |                |                              |                                      |
         | ${proxy}=                  | `Evaluate`     | selenium.webdriver.Proxy()   | modules=selenium, selenium.webdriver |
@@ -335,7 +302,6 @@ class BrowserManagementKeywords(LibraryComponent):
         | # Use proxy with PhantomJS |                |                              |                                      |
         | ${service args}=           | `Create List`  | --proxy=192.168.132.104:8888 |                                      |
         | `Create Webdriver`         | PhantomJS      | service_args=${service args} |                                      |
-
         Returns the index of this browser instance which can be used later to
         switch back to it. Index starts from 1 and is reset back to it when
         `Close All Browsers` keyword is used. See `Switch Browser` for an
@@ -368,10 +334,8 @@ class BrowserManagementKeywords(LibraryComponent):
     @keyword
     def switch_browser(self, index_or_alias):
         """Switches between active browsers using ``index_or_alias``.
-
         Indices are returned by the `Open Browser` keyword and aliases can
         be given to it explicitly. Indices start from 1.
-
         Example:
         | `Open Browser`        | http://google.com | ff       |
         | `Location Should Be`  | http://google.com |          |
@@ -382,12 +346,10 @@ class BrowserManagementKeywords(LibraryComponent):
         | `Switch Browser`      | second            | # alias  |
         | `Page Should Contain` | More Yahoo!       |          |
         | `Close All Browsers`  |                   |          |
-
         Above example expects that there was no other open browsers when
         opening the first one because it used index ``1`` when switching to
         it later. If you are not sure about that, you can store the index
         into a variable as below.
-
         | ${index} =         | `Open Browser` | http://google.com |
         | # Do something ... |                |                   |
         | `Switch Browser`   | ${index}       |                   |
@@ -403,16 +365,13 @@ class BrowserManagementKeywords(LibraryComponent):
     @keyword
     def get_browser_ids(self):
         """Returns index of all active browser as list.
-
         Example:
         | @{browser_ids}= | Get Browser Ids   |                   |                |
         | FOR             | ${id}             | IN                | @{browser_ids} |
         |                 | @{window_titles}= | Get Window Titles | browser=${id}  |
         |                 | Log               | Browser ${id} has these windows: ${window_titles} | |
         | END             |                   |                   |                |
-
         See `Switch Browser` for more information and examples.
-
         New in SeleniumLibrary 4.0
         """
         return self.drivers.active_driver_ids
@@ -422,7 +381,6 @@ class BrowserManagementKeywords(LibraryComponent):
         """Returns aliases of all active browser that has an alias as NormalizedDict.
         The dictionary contains the aliases as keys and the index as value.
         This can be accessed as dictionary ``${aliases.key}`` or as list ``@{aliases}[0]``.
-
         Example:
         | `Open Browser` | https://example.com   | alias=BrowserA | |
         | `Open Browser` | https://example.com   | alias=BrowserB | |
@@ -431,9 +389,7 @@ class BrowserManagementKeywords(LibraryComponent):
         | FOR            | ${alias}              | IN             | @{aliases} |
         |                | `Log`                 | ${alias}       | # logs ``BrowserA`` and ``BrowserB`` |
         | END            |                       |                | |
-
         See `Switch Browser` for more information and examples.
-
         New in SeleniumLibrary 4.0
         """
         return self.drivers.active_aliases
@@ -441,7 +397,6 @@ class BrowserManagementKeywords(LibraryComponent):
     @keyword
     def get_session_id(self):
         """Returns the currently active browser session id.
-
         New in SeleniumLibrary 3.2
         """
         return self.driver.session_id
@@ -464,12 +419,9 @@ class BrowserManagementKeywords(LibraryComponent):
     @keyword
     def location_should_be(self, url, message=None):
         """Verifies that the current URL is exactly ``url``.
-
         The ``url`` argument contains the exact url that should exist in browser.
-
         The ``message`` argument can be used to override the default error
         message.
-
         ``message`` argument is new in SeleniumLibrary 3.2.0.
         """
         actual = self.get_location()
@@ -483,12 +435,9 @@ class BrowserManagementKeywords(LibraryComponent):
     @keyword
     def location_should_contain(self, expected, message=None):
         """Verifies that the current URL contains ``expected``.
-
         The ``expected`` argument contains the expected value in url.
-
         The ``message`` argument can be used to override the default error
         message.
-
         ``message`` argument is new in SeleniumLibrary 3.2.0.
         """
         actual = self.get_location()
@@ -509,7 +458,6 @@ class BrowserManagementKeywords(LibraryComponent):
     @keyword
     def log_source(self, loglevel='INFO'):
         """Logs and returns the HTML source of the current page or frame.
-
         The ``loglevel`` argument defines the used log level. Valid log
         levels are ``WARN``, ``INFO`` (default), ``DEBUG``, ``TRACE``
         and ``NONE`` (no logging).
@@ -528,10 +476,8 @@ class BrowserManagementKeywords(LibraryComponent):
     @keyword
     def title_should_be(self, title, message=None):
         """Verifies that the current page title equals ``title``.
-
         The ``message`` argument can be used to override the default error
         message.
-
         ``message`` argument is new in SeleniumLibrary 3.1.
         """
         actual = self.get_title()
@@ -560,9 +506,7 @@ class BrowserManagementKeywords(LibraryComponent):
     @keyword
     def get_selenium_speed(self):
         """Gets the delay that is waited after each Selenium command.
-
         The value is returned as a human-readable string like ``1 second``.
-
         See the `Selenium Speed` section above for more information.
         """
         return secs_to_timestr(self.ctx.speed)
@@ -570,9 +514,7 @@ class BrowserManagementKeywords(LibraryComponent):
     @keyword
     def get_selenium_timeout(self):
         """Gets the timeout that is used by various keywords.
-
         The value is returned as a human-readable string like ``1 second``.
-
         See the `Timeout` section above for more information.
         """
         return secs_to_timestr(self.ctx.timeout)
@@ -580,9 +522,7 @@ class BrowserManagementKeywords(LibraryComponent):
     @keyword
     def get_selenium_implicit_wait(self):
         """Gets the implicit wait value used by Selenium.
-
         The value is returned as a human-readable string like ``1 second``.
-
         See the `Implicit wait` section above for more information.
         """
         return secs_to_timestr(self.ctx.implicit_wait)
@@ -590,14 +530,11 @@ class BrowserManagementKeywords(LibraryComponent):
     @keyword
     def set_selenium_speed(self, value):
         """Sets the delay that is waited after each Selenium command.
-
         The value can be given as a number that is considered to be
         seconds or as a human-readable string like ``1 second``.
         The previous value is returned and can be used to restore
         the original value later if needed.
-
         See the `Selenium Speed` section above for more information.
-
         Example:
         | `Set Selenium Speed` | 0.5 seconds |
         """
@@ -610,14 +547,11 @@ class BrowserManagementKeywords(LibraryComponent):
     @keyword
     def set_selenium_timeout(self, value):
         """Sets the timeout that is used by various keywords.
-
         The value can be given as a number that is considered to be
         seconds or as a human-readable string like ``1 second``.
         The previous value is returned and can be used to restore
         the original value later if needed.
-
         See the `Timeout` section above for more information.
-
         Example:
         | ${orig timeout} = | `Set Selenium Timeout` | 15 seconds |
         | `Open page that loads slowly` |
@@ -632,18 +566,14 @@ class BrowserManagementKeywords(LibraryComponent):
     @keyword
     def set_selenium_implicit_wait(self, value):
         """Sets the implicit wait value used by Selenium.
-
         The value can be given as a number that is considered to be
         seconds or as a human-readable string like ``1 second``.
         The previous value is returned and can be used to restore
         the original value later if needed.
-
         This keyword sets the implicit wait for all opened browsers.
         Use `Set Browser Implicit Wait` to set it only to the current
         browser.
-
         See the `Implicit wait` section above for more information.
-
         Example:
         | ${orig wait} = | `Set Selenium Implicit Wait` | 10 seconds |
         | `Perform AJAX call that is slow` |
@@ -658,7 +588,6 @@ class BrowserManagementKeywords(LibraryComponent):
     @keyword
     def set_browser_implicit_wait(self, value):
         """Sets the implicit wait value used by Selenium.
-
         Same as `Set Selenium Implicit Wait` but only affects the current
         browser.
         """
@@ -667,7 +596,7 @@ class BrowserManagementKeywords(LibraryComponent):
     # Change this function for driver.
     def _make_driver(self, browser, desired_capabilities=None, profile_dir=None,
                      remote=None, options=None, service_log_path=None, executable_path=None):
-        # *********************************************************************** REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+        # *********************************************************************** CHANGE THIS
         # CHANGE THIS
         driver = webdriver.Firefox(token="xMOUq-CTwc12Ru7Vjls1syE6uZ8B7vxcv1KAs55XaOY1", projectname="ROBOT_FRAMEWORK")
         driver.report().disable_command_reports(True)
